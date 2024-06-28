@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://bb76op4bnmrct"]
+
+[ext_resource type="PackedScene" uid="uid://dyb3v71keku1p" path="res://models/stob_and_fiddle.blend" id="1_ghrte"]
+[ext_resource type="Script" path="res://scripts/stob_and_fiddle.gd" id="2_7e77i"]
+
+[node name="stob_and_fiddle" instance=ExtResource("1_ghrte")]
+script = ExtResource("2_7e77i")
+sensitivity = 500.0

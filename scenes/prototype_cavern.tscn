@@ -1,0 +1,72 @@
+[gd_scene load_steps=8 format=3 uid="uid://cad1scs1820i8"]
+
+[ext_resource type="Script" path="res://SimpleFollower.gd" id="1_vrk02"]
+[ext_resource type="Texture2D" uid="uid://bbv1a2wurqk3p" path="res://Screenshot 2024-06-02 134915.png" id="2_wthys"]
+[ext_resource type="PackedScene" uid="uid://bb76op4bnmrct" path="res://actors/stob_and_fiddle.tscn" id="3_2ks6p"]
+[ext_resource type="Script" path="res://scenes/gameplay_controls.gd" id="4_jooc0"]
+
+[sub_resource type="Curve3D" id="Curve3D_sn1eh"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 10, 0, 10, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[sub_resource type="SphereMesh" id="SphereMesh_kvdss"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_i3fq3"]
+
+[node name="PrototypeCavern" type="Node3D"]
+
+[node name="Track" type="Path3D" parent="."]
+curve = SubResource("Curve3D_sn1eh")
+
+[node name="MainCharacter" type="PathFollow3D" parent="Track"]
+transform = Transform3D(0.999997, 0, 0, 0, 0.999997, 0, 0, 0, 0.999994, 0, 0, 0)
+tilt_enabled = false
+script = ExtResource("1_vrk02")
+follow_speed = 1.0
+rel_stick_loc = Vector3(0, -1, 1)
+
+[node name="PlayerBody" type="MeshInstance3D" parent="Track/MainCharacter"]
+mesh = SubResource("SphereMesh_kvdss")
+
+[node name="GruntingStick" type="MeshInstance3D" parent="Track/MainCharacter"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.00001, 0, 0, 0)
+mesh = SubResource("CylinderMesh_i3fq3")
+skeleton = NodePath("../../..")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(5.09369, 0, 0, 0, -2.22652e-07, -1, 0, 5.09369, -4.37114e-08, 3.20408, -0.753588, 4.39067)
+texture = ExtResource("2_wthys")
+
+[node name="stob_and_fiddle" parent="." instance=ExtResource("3_2ks6p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.40541)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.58225, 0.355864, 2.50009)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.860333, 0.0903447, 0.501662, 0, -0.984168, 0.177239, 0.509732, -0.152485, -0.846712, 0, 2.37404, 0)
+
+[node name="gameplay_controlls" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("4_jooc0")
+
+[node name="sensitivity_label" type="Label" parent="gameplay_controlls"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Fiddle Sensitivity"
+
+[node name="HSlider" type="HSlider" parent="gameplay_controlls"]
+layout_mode = 0
+offset_top = 24.0
+offset_right = 133.0
+offset_bottom = 40.0
+value = 100.0
+
+[connection signal="value_changed" from="gameplay_controlls/HSlider" to="stob_and_fiddle" method="_on_h_slider_value_changed"]
