@@ -1,50 +1,35 @@
-[gd_scene load_steps=8 format=3 uid="uid://cad1scs1820i8"]
+[gd_scene load_steps=6 format=3 uid="uid://b07vqr3t24wup"]
 
-[ext_resource type="Script" path="res://SimpleFollower.gd" id="1_vrk02"]
+[ext_resource type="PackedScene" uid="uid://h8nii0mmqg2n" path="res://actors/player_avatar.tscn" id="1_2be8l"]
+[ext_resource type="Script" path="res://scripts/timber_layer.gd" id="1_oivn2"]
 [ext_resource type="Texture2D" uid="uid://bbv1a2wurqk3p" path="res://Screenshot 2024-06-02 134915.png" id="2_wthys"]
-[ext_resource type="PackedScene" uid="uid://bb76op4bnmrct" path="res://actors/stob_and_fiddle.tscn" id="3_2ks6p"]
-[ext_resource type="Script" path="res://scenes/gameplay_controls.gd" id="4_jooc0"]
+[ext_resource type="Script" path="res://scripts/gameplay_controls.gd" id="4_jooc0"]
 
 [sub_resource type="Curve3D" id="Curve3D_sn1eh"]
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 10, 0, 10, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+"points": PackedVector3Array(-0.646358, -0.0836267, -0.807891, 0.646358, 0.0836267, 0.807891, 0.233301, 0.169949, 0.318352, -1.93257, -1.37284, 0.141846, 1.93257, 1.37284, -0.141846, 10, 0, 10, 1.88931, -1.35994, 2.05124, -1.88931, 1.35994, -2.05124, 9.95555, 0.13301, -0.325928, 2.70256, 0.707212, -1.55098, -2.70256, -0.707212, 1.55098, 0.991932, 0.239314, -4.90763, -0.646358, -0.0836267, -0.807891, 0.646358, 0.0836267, 0.807891, 0.233301, 0.169949, 0.318352),
 "tilts": PackedFloat32Array(0, 0, 0, 0, 0)
 }
 point_count = 5
-
-[sub_resource type="SphereMesh" id="SphereMesh_kvdss"]
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_i3fq3"]
 
 [node name="PrototypeCavern" type="Node3D"]
 
 [node name="Track" type="Path3D" parent="."]
 curve = SubResource("Curve3D_sn1eh")
+script = ExtResource("1_oivn2")
+timber_offset = Vector3(0, -0.1, 0)
 
-[node name="MainCharacter" type="PathFollow3D" parent="Track"]
-transform = Transform3D(0.999997, 0, 0, 0, 0.999997, 0, 0, 0, 0.999994, 0, 0, 0)
-tilt_enabled = false
-script = ExtResource("1_vrk02")
-follow_speed = 1.0
-rel_stick_loc = Vector3(0, -1, 1)
+[node name="avatar" parent="Track" instance=ExtResource("1_2be8l")]
+transform = Transform3D(0.780844, -0.0503302, 0.622687, -5.58791e-09, 0.996744, 0.0805641, -0.624719, -0.0629083, 0.778304, 0.233301, 0.169949, 0.318352)
+max_follow_speed = 10.0
+hand_move_rate = 1.0
 
-[node name="PlayerBody" type="MeshInstance3D" parent="Track/MainCharacter"]
-mesh = SubResource("SphereMesh_kvdss")
-
-[node name="GruntingStick" type="MeshInstance3D" parent="Track/MainCharacter"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.00001, 0, 0, 0)
-mesh = SubResource("CylinderMesh_i3fq3")
-skeleton = NodePath("../../..")
+[node name="timber_layer" type="PathFollow3D" parent="Track"]
+transform = Transform3D(0.780847, -0.0503305, 0.622691, -5.58794e-09, 0.996749, 0.0805646, -0.624722, -0.0629087, 0.778309, 0.233301, 0.169949, 0.318352)
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(5.09369, 0, 0, 0, -2.22652e-07, -1, 0, 5.09369, -4.37114e-08, 3.20408, -0.753588, 4.39067)
 texture = ExtResource("2_wthys")
-
-[node name="stob_and_fiddle" parent="." instance=ExtResource("3_2ks6p")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.40541)
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.58225, 0.355864, 2.50009)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.860333, 0.0903447, 0.501662, 0, -0.984168, 0.177239, 0.509732, -0.152485, -0.846712, 0, 2.37404, 0)
@@ -52,21 +37,28 @@ transform = Transform3D(0.860333, 0.0903447, 0.501662, 0, -0.984168, 0.177239, 0
 [node name="gameplay_controlls" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 166.0
+offset_bottom = 81.0
 script = ExtResource("4_jooc0")
 
-[node name="sensitivity_label" type="Label" parent="gameplay_controlls"]
+[node name="VBoxContainer" type="VBoxContainer" parent="gameplay_controlls"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_right = 145.0
+offset_bottom = 106.0
+
+[node name="sensitivity_label" type="Label" parent="gameplay_controlls/VBoxContainer"]
+layout_mode = 2
 text = "Fiddle Sensitivity"
 
-[node name="HSlider" type="HSlider" parent="gameplay_controlls"]
-layout_mode = 0
-offset_top = 24.0
-offset_right = 133.0
-offset_bottom = 40.0
+[node name="sensitivity_slider" type="HSlider" parent="gameplay_controlls/VBoxContainer"]
+layout_mode = 2
 value = 100.0
+ticks_on_borders = true
 
-[connection signal="value_changed" from="gameplay_controlls/HSlider" to="stob_and_fiddle" method="_on_h_slider_value_changed"]
+[node name="worm_label" type="Label" parent="gameplay_controlls/VBoxContainer"]
+layout_mode = 2
+text = "Worms Collected:"
+
+[node name="worm_count" type="Label" parent="gameplay_controlls/VBoxContainer"]
+layout_mode = 2
+text = "0"
