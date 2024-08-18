@@ -5,6 +5,3 @@
 
 [node name="stob_and_fiddle" instance=ExtResource("1_ghrte")]
 script = ExtResource("2_7e77i")
-
-[node name="Fiddle" parent="." index="1"]
-transform = Transform3D(0, 1, 0, -0.25, 0, 0, 0, 0, 0.25, 0, 0.0972081, -0.69941)

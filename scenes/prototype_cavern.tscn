@@ -21,8 +21,6 @@ timber_offset = Vector3(0, -0.1, 0)
 
 [node name="avatar" parent="Track" instance=ExtResource("1_2be8l")]
 transform = Transform3D(0.780844, -0.0503302, 0.622687, -5.58791e-09, 0.996744, 0.0805641, -0.624719, -0.0629083, 0.778304, 0.233301, 0.169949, 0.318352)
-max_follow_speed = 10.0
-hand_move_rate = 1.0
 
 [node name="timber_layer" type="PathFollow3D" parent="Track"]
 transform = Transform3D(0.780847, -0.0503305, 0.622691, -5.58794e-09, 0.996749, 0.0805646, -0.624722, -0.0629087, 0.778309, 0.233301, 0.169949, 0.318352)
